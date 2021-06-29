@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -72,23 +73,45 @@ void imprimirLista(tLista* pLista){
   }
 }
 
+void gravarArquivo(tLista* pLista){
+  ofstream file;
+  pLista -> marcador = pLista -> primeiro;
+
+  file.open("investimentos.txt", ios::out);
+
+  while(!finalLista(pLista)){
+    tInvestimento informacao = pLista -> marcador -> info;
+
+    file << "Montante Investido: " << informacao.montInicial << endl;
+    file << "Juro ao ano: " << informacao.juroAno << endl;
+    file << "Periodo em anos: " << informacao.periodoAno << endl;
+
+    pLista->marcador = pLista->marcador->proximo;
+  }
+  
+}
+
 int main() {
   tLista* investimento = new tLista;
   tInvestimento invest;
   int tamanho;
 
+  cout << "Digite a quantidade de informacoes que ira digitar: " << endl;
   cin >> tamanho;
-  
+
   for (int i = 0; i < tamanho; i++){
+    cout << "\nMontante Inicial: ";
     cin >> invest.montInicial;
+    cout << "Juro ao Ano: ";
     cin >> invest.juroAno;
+    cout << "Periodo ao Ano: ";
     cin >> invest.periodoAno;
     incluirNoFim(investimento, invest);
   }
   
-  cout << "Tamanho lista: " << obterTamanho(investimento) << endl;
+  cout << "\nTamanho lista: " << obterTamanho(investimento) << endl;
 
-  imprimirLista(investimento);
+  gravarArquivo(investimento);
 
 
 }
