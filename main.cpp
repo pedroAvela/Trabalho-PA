@@ -82,13 +82,42 @@ void gravarArquivo(tLista* pLista){
   while(!finalLista(pLista)){
     tInvestimento informacao = pLista -> marcador -> info;
 
-    file << "Montante Investido: " << informacao.montInicial << endl;
-    file << "Juro ao ano: " << informacao.juroAno << endl;
-    file << "Periodo em anos: " << informacao.periodoAno << endl;
+    file << "Montante(investido): " << informacao.montInicial << endl;
+    file << "Juro(ano): " << informacao.juroAno << endl;
+    file << "Periodo(anos): " << informacao.periodoAno << endl;
 
     pLista->marcador = pLista->marcador->proximo;
   }
   
+  file.close();
+}
+
+void lerArquivo(){
+  ifstream file;
+  int aux = 1;
+  string text = " ";
+
+  file.open("investimentos.txt", ios::in);
+  while(!file.eof()){
+    file >> text;
+
+    if (text == "Montante(investido):"){
+      cout << text;
+      file >> text;
+      cout << text << endl;
+    }else if(text == "Juro(ano):"){
+      cout << text;
+      file >> text;
+      cout << text << endl;
+    }else if(text == "Periodo(anos):"){
+      cout << text;
+      file >> text;
+      cout << text << endl;
+    }
+    
+  }
+
+  file.close();
 }
 
 int main() {
@@ -96,22 +125,24 @@ int main() {
   tInvestimento invest;
   int tamanho;
 
-  cout << "Digite a quantidade de informacoes que ira digitar: " << endl;
-  cin >> tamanho;
+  // cout << "Digite a quantidade de informacoes que ira digitar: " << endl;
+  // cin >> tamanho;
 
-  for (int i = 0; i < tamanho; i++){
-    cout << "\nMontante Inicial: ";
-    cin >> invest.montInicial;
-    cout << "Juro ao Ano: ";
-    cin >> invest.juroAno;
-    cout << "Periodo ao Ano: ";
-    cin >> invest.periodoAno;
-    incluirNoFim(investimento, invest);
-  }
+  // for (int i = 0; i < tamanho; i++){
+  //   cout << "\nMontante Inicial: ";
+  //   cin >> invest.montInicial;
+  //   cout << "Juro ao Ano: ";
+  //   cin >> invest.juroAno;
+  //   cout << "Periodo ao Ano: ";
+  //   cin >> invest.periodoAno;
+  //   incluirNoFim(investimento, invest);
+  // }
   
-  cout << "\nTamanho lista: " << obterTamanho(investimento) << endl;
+  // cout << "\nTamanho lista: " << obterTamanho(investimento) << endl;
 
-  gravarArquivo(investimento);
+  // gravarArquivo(investimento);
+
+  lerArquivo();
 
 
 }
