@@ -188,7 +188,8 @@ int main() {
       case 3: 
         is_running = false;
         break;
-      default: 
+      default:
+        cout << "\033[2J\033[1;1H"; 
         cout << "Escolha inválida tente novamente" << endl;
         continue;
     }
