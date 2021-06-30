@@ -74,8 +74,23 @@ void imprimirLista(tLista* pLista){
   }
 }
 
-void gravarArquivo(tLista* pLista){
+void gravarArquivo(tLista* pLista, tInvestimento invest){
   ofstream file;
+  int tamanho;
+
+  cout << "Digite a quantidade de informacoes que ira digitar: " << endl;
+  cin >> tamanho;
+
+  for (int i = 0; i < tamanho; i++){
+    cout << "\nMontante Inicial: ";
+    cin >> invest.montInicial;
+    cout << "Juro ao Ano: ";
+    cin >> invest.juroAno;
+    cout << "Periodo ao Ano: ";
+    cin >> invest.periodoAno;
+    incluirNoFim(pLista, invest);
+  }
+  
   pLista -> marcador = pLista -> primeiro;
 
   file.open("investimentos.txt", ios::out);
@@ -127,29 +142,57 @@ void lerArquivo(tLista* pLista, tInvestimento info){
   imprimirLista(pLista);
 }
 
+bool verificadorString(string valores, bool is_float){
+  int point = 0;
+  for (int i = 0; i < valores.length(); i++){
+    if ((((valores[i] < 48) || (valores[i] > 57)) && (valores[i] != 46)) || (point > 1) || (is_float == 0)){
+      return false;
+    }else if((valores[i] < 48) || (valores[i] > 57) || is_float == 1){
+      return false;
+      cout << "hi";
+    }else if (valores[i] == 46){
+      point++;
+    }
+  }
+  return true;
+}
+
 int main() {
   tLista* investimento = new tLista;
   tInvestimento invest;
-  int tamanho;
+  int choice = 0;
+  string aux;
+  bool is_running = true;
 
-  // cout << "Digite a quantidade de informacoes que ira digitar: " << endl;
-  // cin >> tamanho;
+  while (is_running){
+    cout << "******************************************" << endl;
+    cout << "\t1. Para gravar um banco de dados" << endl;
+    cout << "\t2. Para ler um banco de dados" << endl;
+    cout << "\t3. Para sair do programa" << endl;
+    cout << "******************************************" << endl;
+    cin >> aux;
 
-  // for (int i = 0; i < tamanho; i++){
-  //   cout << "\nMontante Inicial: ";
-  //   cin >> invest.montInicial;
-  //   cout << "Juro ao Ano: ";
-  //   cin >> invest.juroAno;
-  //   cout << "Periodo ao Ano: ";
-  //   cin >> invest.periodoAno;
-  //   incluirNoFim(investimento, invest);
-  // }
-  
-  // cout << "\nTamanho lista: " << obterTamanho(investimento) << endl;
+    if (verificadorString(aux, true)){
+      choice = stof(aux);
+    }
 
-  // gravarArquivo(investimento);
-
-  lerArquivo(investimento, invest);
+    switch (choice){
+      case 1: 
+        cout << "\033[2J\033[1;1H";
+        gravarArquivo(investimento, invest);
+        break;
+      case 2: 
+        cout << "\033[2J\033[1;1H";
+        lerArquivo(investimento, invest);
+        break;
+      case 3: 
+        is_running = false;
+        break;
+      default: 
+        cout << "Escolha inválida tente novamente" << endl;
+        continue;
+    }
+  }
 
   return 0;
 }
