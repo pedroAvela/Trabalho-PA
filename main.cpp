@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <fstream>
 
 using namespace std;
@@ -92,32 +93,38 @@ void gravarArquivo(tLista* pLista){
   file.close();
 }
 
-void lerArquivo(){
+void lerArquivo(tLista* pLista, tInvestimento info){
   ifstream file;
-  int aux = 1;
   string text = " ";
+  int aux;
 
   file.open("investimentos.txt", ios::in);
   while(!file.eof()){
     file >> text;
-
     if (text == "Montante(investido):"){
-      cout << text;
       file >> text;
-      cout << text << endl;
+      cout << "";
+      cout << "";
+      info.montInicial = stof(text);
     }else if(text == "Juro(ano):"){
-      cout << text;
       file >> text;
-      cout << text << endl;
+      info.juroAno = stof(text);
     }else if(text == "Periodo(anos):"){
-      cout << text;
       file >> text;
-      cout << text << endl;
+      info.periodoAno = stof(text);
+    }
+
+    aux++;
+
+    if (aux == 3){
+      incluirNoFim(pLista, info);
+      aux = 0;
     }
     
   }
-
   file.close();
+
+  imprimirLista(pLista);
 }
 
 int main() {
@@ -142,7 +149,7 @@ int main() {
 
   // gravarArquivo(investimento);
 
-  lerArquivo();
+  lerArquivo(investimento, invest);
 
-
+  return 0;
 }
