@@ -74,6 +74,11 @@ void imprimirLista(tLista* pLista){
   }
 }
 
+void clearInput() {
+  cin.clear();
+  cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
 void gravarArquivo(tLista* pLista, tInvestimento invest){
   ofstream file;
   int tamanho;
@@ -142,41 +147,25 @@ void lerArquivo(tLista* pLista, tInvestimento info){
   imprimirLista(pLista);
 }
 
-bool verificadorString(string valores, bool is_float){
-  int point = 0;
-  for (int i = 0; i < valores.length(); i++){
-    if ((((valores[i] < 48) || (valores[i] > 57)) && (valores[i] != 46)) || (point > 1) || (is_float == 0)){
-      return false;
-    }else if((valores[i] < 48) || (valores[i] > 57) || is_float == 1){
-      return false;
-      cout << "hi";
-    }else if (valores[i] == 46){
-      point++;
-    }
-  }
-  return true;
+int input(){
+  int choice;
+  cout << "\n******************************************" << endl;
+  cout << "\t1. Para gravar um banco de dados" << endl;
+  cout << "\t2. Para ler um banco de dados" << endl;
+  cout << "\t3. Para sair do programa" << endl;
+  cout << "******************************************" << endl;
+  cin >> choice;
+  return choice;
 }
 
 int main() {
   tLista* investimento = new tLista;
   tInvestimento invest;
-  int choice = 0;
-  string aux;
   bool is_running = true;
 
   while (is_running){
-    cout << "******************************************" << endl;
-    cout << "\t1. Para gravar um banco de dados" << endl;
-    cout << "\t2. Para ler um banco de dados" << endl;
-    cout << "\t3. Para sair do programa" << endl;
-    cout << "******************************************" << endl;
-    cin >> aux;
 
-    if (verificadorString(aux, true)){
-      choice = stof(aux);
-    }
-
-    switch (choice){
+    switch (input()){
       case 1: 
         cout << "\033[2J\033[1;1H";
         gravarArquivo(investimento, invest);
@@ -190,7 +179,8 @@ int main() {
         break;
       default:
         cout << "\033[2J\033[1;1H"; 
-        cout << "Escolha inválida tente novamente" << endl;
+        cout << "Escolha inválida ou numero digitado incorrentamente tente novamente" << endl;
+        clearInput();
         continue;
     }
   }
