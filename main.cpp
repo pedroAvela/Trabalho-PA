@@ -62,21 +62,47 @@ void incluirNoFim(tLista* pLista, tInvestimento info){
 
 void imprimirLista(tLista* pLista){
   pLista -> marcador = pLista -> primeiro;
+  int cont = 1;
 
   while(!finalLista(pLista)){
     tInvestimento informacao = pLista -> marcador -> info;
 
+    cout << "Bloco de dados " << cont << ":\n{" << endl;
     cout << "Montante Investido: " << informacao.montInicial << endl;
     cout << "Juro ao ano: " << informacao.juroAno << endl;
     cout << "Periodo em anos: " << informacao.periodoAno << endl;
+    cout << "}\n" << endl;
 
     pLista->marcador = pLista->marcador->proximo;
+    cont++;
   }
+
+  cout << "Total de dados carregados: " << (cont - 1) << endl;
 }
 
 void clearInput() {
   cin.clear();
   cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+
+void gravarLista(tLista* pLista){
+  ofstream file;
+
+  file.open("investimentos.txt", ios::out);
+  
+  pLista -> marcador = pLista -> primeiro;
+  while(!finalLista(pLista)){
+    tInvestimento informacao = pLista -> marcador -> info;
+
+    file << "Montante(investido): " << informacao.montInicial << endl;
+    file << "Juro(ano): " << informacao.juroAno << endl;
+    file << "Periodo(anos): " << informacao.periodoAno << endl;
+
+    pLista->marcador = pLista->marcador->proximo;
+  }
+
+  file.close();
 }
 
 void gravarArquivo(tLista* pLista, tInvestimento invest){
@@ -96,21 +122,9 @@ void gravarArquivo(tLista* pLista, tInvestimento invest){
     incluirNoFim(pLista, invest);
   }
   
-  pLista -> marcador = pLista -> primeiro;
-
-  file.open("investimentos.txt", ios::out);
-
-  while(!finalLista(pLista)){
-    tInvestimento informacao = pLista -> marcador -> info;
-
-    file << "Montante(investido): " << informacao.montInicial << endl;
-    file << "Juro(ano): " << informacao.juroAno << endl;
-    file << "Periodo(anos): " << informacao.periodoAno << endl;
-
-    pLista->marcador = pLista->marcador->proximo;
-  }
   
-  file.close();
+  gravarLista(pLista);
+
 }
 
 void lerArquivo(tLista* pLista, tInvestimento info){
