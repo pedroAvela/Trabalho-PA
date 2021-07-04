@@ -173,17 +173,6 @@ int input(){
   return choice;
 }
 
-void instrucoes(){
-  cout << "Avisos e instruções:\n" << endl;
-  cout << "Ao escolher a opção gravar arquivo, o programa irá criar um arquivo .txt na pasta do programa com o nome de 'investimentos.txt'." << endl;
-  cout << "Enquanto escolher a opção gravar no menu, após ter escolhido da primeira vez, o programa irá continuar a coletar os dados" << endl;
-  cout << "e colocá-los dentro do arquivo." << endl;
-  cout << "\nCaso escolha a opção ler, o programa irá ler o Arquivo e exibir suas informações na tela." << endl;
-  cout << "\nIMPORTANTE: Para adicionar novos dados em um arquivo já existente, deve-se ler o arquivo primeiro, antes de gravar, caso" << endl; 
-  cout << "o contrário programa irá sobrepor as informações do antigo arquivo, ou seja, apagará os dados que estavama antes e colocara" << endl;
-  cout << "novos no lugar." << endl;
-}
-
 int main() {
   tLista* investimento = new tLista;
   tInvestimento invest;
@@ -208,7 +197,7 @@ int main() {
   )""" << endl;
 
   while (is_running){
-
+    tLista* investimento = new tLista;
     switch (input()){
       case 1: 
         cout << "\033[2J\033[1;1H";
@@ -218,11 +207,7 @@ int main() {
         cout << "\033[2J\033[1;1H";
         lerArquivo(investimento, invest);
         break;
-      case 3: 
-        cout << "\033[2J\033[1;1H";
-        instrucoes();
-        break;
-      case 4:
+      case 3:
         is_running = false;
         break;
       default:
