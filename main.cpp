@@ -106,7 +106,6 @@ void gravarLista(tLista* pLista){
 }
 
 void gravarArquivo(tLista* pLista, tInvestimento invest){
-  ofstream file;
   int tamanho;
 
   cout << "Digite a quantidade de informacoes que ira digitar: " << endl;
@@ -166,17 +165,16 @@ int input(){
   cout << "\n******************************************" << endl;
   cout << "\t1. Para gravar um banco de dados" << endl;
   cout << "\t2. Para ler um banco de dados" << endl;
-  cout << "\t3. Para  avisos e instruções" << endl;
-  cout << "\t4. Para sair do programa" << endl;
+  cout << "\t3. Para sair do programa" << endl;
   cout << "******************************************" << endl;
   cin >> choice;
   return choice;
 }
 
 int main() {
-  tLista* investimento = new tLista;
   tInvestimento invest;
   bool is_running = true;
+  
   cout << R"""(
        ______               __                ___    __                
       /\__  _\             /\ \              /\_ \  /\ \               
